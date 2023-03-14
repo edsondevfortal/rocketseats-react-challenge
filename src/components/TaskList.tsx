@@ -16,40 +16,38 @@ export function TaskList() {
 
   // Create a new task with a random id, don't allow creating if the title is empty.
   function handleCreateNewTask() {
-    // if (!newTaskTitle.trim()) return; // Checks if the title is empty or contains only whitespace
-
     // Checks if the title contains the same name
     const hasTaskWithTitle = tasks.find((task) => task.title === newTaskTitle);
     if (hasTaskWithTitle) {
       alert("Já existe uma tarefa com este título!");
       return;
+      // Checks if the title is empty
     } else if (!newTaskTitle.trim()) {
       alert(
         "Não é possível gerar tarefa com name vazio, por favor dê um nome!"
       );
       return;
     }
-
+    // create new object of type task
     const newTask: Task = {
       id: Math.random(),
       title: newTaskTitle,
       isComplete: false,
     };
-
+    // Insert new object task in list no change original object | immutability
     setTasks([...tasks, newTask]);
-    setNewTaskTitle("");
   }
 
-  // alter between `true` or `false` the 'isComplete' field of a task with the id field
+  // Alter between `true` or `false` the 'isComplete' field of a task with the id field
   function handleToggleTaskCompletion(id: number) {
-    const updatedTasks = tasks.map((task) => {
+    const updateTasks = tasks.map((task) => {
       if (task.id === id) {
         return { ...task, isComplete: !task.isComplete };
       }
       return task;
     });
-
-    setTasks(updatedTasks);
+    // Updated properity with new value of task
+    setTasks(updateTasks);
   }
 
   // Remove a task from the list by ID
